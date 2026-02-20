@@ -11,6 +11,18 @@
   --color-darker: #000000;
   --color-surface: #121212;
   --color-surface-hover: #1a1a1a;
+
+  --animate-gradient-x: gradient-x 3s ease infinite;
+
+  @keyframes gradient-x {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: var(--animate-gradient-x);
 }
 
 body {

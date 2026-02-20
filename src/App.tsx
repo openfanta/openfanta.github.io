@@ -1,9 +1,24 @@
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Github, Code2, Calculator, Users, Shield, ArrowRight, Terminal, Star, Menu, X } from 'lucide-react';
-import { useState, ReactNode } from 'react';
+import { useState, ReactNode, useEffect } from 'react';
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const words = [
+    "DEL POPOLO.",
+    "GRATUITO.",
+    "COERENTE.",
+    "OPEN SOURCE."
+  ];
+
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % words.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="min-h-screen bg-darker text-white font-sans selection:bg-neon selection:text-darker">
@@ -16,17 +31,17 @@ export default function App() {
             </div>
             <span className="font-display font-bold text-xl tracking-tight">OpenFanta</span>
           </div>
-          
+
           <div className="hidden md:flex items-center gap-8 text-sm font-mono text-white/60">
             <a href="#features" className="hover:text-neon transition-colors">/features</a>
             <a href="#algorithm" className="hover:text-neon transition-colors">/algoritmo</a>
             <a href="#community" className="hover:text-neon transition-colors">/community</a>
           </div>
-          
+
           <div className="hidden md:flex items-center gap-4">
-            <a 
-              href="https://github.com" 
-              target="_blank" 
+            <a
+              href="https://github.com"
+              target="_blank"
               rel="noreferrer"
               className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-full font-mono text-sm transition-all"
             >
@@ -35,7 +50,7 @@ export default function App() {
             </a>
           </div>
 
-          <button 
+          <button
             className="md:hidden text-white/80 hover:text-white"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -49,9 +64,9 @@ export default function App() {
             <a href="#features" onClick={() => setIsMenuOpen(false)} className="text-white/60 hover:text-neon transition-colors py-2">/features</a>
             <a href="#algorithm" onClick={() => setIsMenuOpen(false)} className="text-white/60 hover:text-neon transition-colors py-2">/algoritmo</a>
             <a href="#community" onClick={() => setIsMenuOpen(false)} className="text-white/60 hover:text-neon transition-colors py-2">/community</a>
-            <a 
-              href="https://github.com" 
-              target="_blank" 
+            <a
+              href="https://github.com"
+              target="_blank"
               rel="noreferrer"
               className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-3 rounded-lg mt-4 justify-center"
             >
@@ -65,7 +80,7 @@ export default function App() {
       {/* Hero Section */}
       <section className="pt-40 pb-20 px-6 relative overflow-hidden min-h-screen flex items-center">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] bg-neon/20 rounded-full blur-[120px] pointer-events-none" />
-        
+
         <div className="max-w-5xl mx-auto relative z-10 w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -76,30 +91,41 @@ export default function App() {
             <span className="w-2 h-2 rounded-full bg-neon animate-pulse" />
             v1.0.0-beta in sviluppo
           </motion.div>
-          
-          <motion.h1 
+
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-[100px] font-bold leading-[0.9] tracking-tighter mb-8"
+            className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-[100px] font-bold leading-[0.9] tracking-tighter mb-8 min-h-[1.8em] sm:min-h-[1.8em]"
           >
             IL FANTACALCIO<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon to-green-400">
-              DEGLI SVILUPPATORI.
-            </span>
+            <div className="h-[1.1em] overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={words[index]}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-neon via-green-400 to-neon animate-gradient-x block"
+                >
+                  {words[index]}
+                </motion.span>
+              </AnimatePresence>
+            </div>
           </motion.h1>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg md:text-2xl text-white/60 max-w-2xl mb-12 font-light leading-relaxed"
           >
-            Gratuito. Senza pubblicità. Open Source. 
+            Gratuito. Senza pubblicità. Open Source.
             Voti basati su algoritmi e statistiche, non sulle opinioni dei giornalisti.
           </motion.p>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -126,21 +152,21 @@ export default function App() {
               // Abbiamo preso tutto ciò che odiavamo del fantacalcio tradizionale e lo abbiamo riscritto da zero.
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-6">
-            <FeatureCard 
+            <FeatureCard
               icon={<Shield className="w-8 h-8 text-neon" />}
               title="100% Gratuito & No Ads"
               description="Nessun abbonamento premium, nessun banner invasivo. OpenFanta è e sarà sempre gratuito per tutti, mantenuto dalla community."
               delay={0.1}
             />
-            <FeatureCard 
+            <FeatureCard
               icon={<Calculator className="w-8 h-8 text-neon" />}
               title="Voti Algoritmici"
               description="Basta polemiche sui voti dei giornalisti. I nostri voti sono calcolati matematicamente basandosi su statistiche reali (Opta/StatsBomb)."
               delay={0.2}
             />
-            <FeatureCard 
+            <FeatureCard
               icon={<Users className="w-8 h-8 text-neon" />}
               title="Guidato dalla Community"
               description="Vuoi una nuova regola? Apri una issue su GitHub. Le funzionalità più votate vengono implementate dalla community e rilasciate per tutti."
@@ -169,10 +195,6 @@ export default function App() {
                 <div className="w-1.5 h-1.5 bg-neon rounded-full" />
                 <span className="text-white/80">Formula open source e verificabile su GitHub</span>
               </li>
-              <li className="flex items-center gap-3">
-                <div className="w-1.5 h-1.5 bg-neon rounded-full" />
-                <span className="text-white/80">Aggiornamenti in tempo reale durante i match</span>
-              </li>
             </ul>
           </div>
           <div className="flex-1 w-full relative">
@@ -185,7 +207,7 @@ export default function App() {
               </div>
               <pre className="text-white/70">
                 <code className="language-typescript">
-{`function calculateGrade(stats: PlayerStats): number {
+                  {`function calculateGrade(stats: PlayerStats): number {
   const baseGrade = 6.0;
   
   // Offensive impact (Expected Goals & Assists)
@@ -255,7 +277,7 @@ export default function App() {
 
 function FeatureCard({ icon, title, description, delay }: { icon: ReactNode, title: string, description: string, delay: number }) {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
